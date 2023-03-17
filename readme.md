@@ -32,10 +32,10 @@ $ sudo docker-compose up
 
 Once the application is up and runnig, you can access the endpoints with insomnia or postman. There are currently 4 endpoist:
 
-GET /api/user/{userId}
-GET /api/user/{userId}/avatar
-DELETE /api/user/{userId}/avatar
-POST /api/user - for this one, you need to send a JSON body, here is an example:
+> - GET /api/user/{userId}
+> - GET /api/user/{userId}/avatar
+> - DELETE /api/user/{userId}/avatar
+> - POST /api/user - for this one, you need to send a JSON body, here is an example:
 
 ```bash
   {
