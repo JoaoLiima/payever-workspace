@@ -41,7 +41,7 @@ Once the application is up and runnig, you can access the endpoints with insomni
   {
     "email": "email@test.com",
     "first_name": "Test",
-    "last_name": "Mail"
+    "last_name": "User"
   }
 ```
 
