@@ -1,0 +1,3 @@
+[submodule "payever-api"]
+	path = payever-api
+	url = https://github.com/JoaoLiima/payever-api.git

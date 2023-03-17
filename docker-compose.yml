@@ -1,0 +1,55 @@
+version: "3.8"
+services:
+  payever-api:
+    container_name: payever-api
+    image: node:18.15.0
+    networks:
+      - base_network
+    ports:
+      - 3000:3000
+    command: sh -c "yarn start:dev"
+    working_dir: ${WORKING_DIR}
+    depends_on:
+      - db
+    volumes:
+      - ./payever-api:${WORKING_DIR}
+    environment:
+      MONGO_URI: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@db:27017/${MONGO_DATABASE}?authSource=admin
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      RABBITMQ_HOST: ${RABBITMQ_HOST}
+      RABBITMQ_QUEUE_NAME: ${RABBITMQ_QUEUE_NAME}
+
+  db:
+    container_name: db
+    image: mongo:6.0.3
+    networks:
+      - base_network
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - base_network
+    volumes:
+      - ./rabbitmq/data/:${WORKING_DIR}/data
+      - ./rabbitmq/logs/:${WORKING_DIR}/logs
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+
+networks:
+  base_network:
+
+volumes:
+  mongo_data:
